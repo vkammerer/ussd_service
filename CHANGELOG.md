@@ -1,3 +1,3 @@
-## 0.0.1
+## 0.0.1 - 2019-10-02
 
-* TODO: Describe initial release.
+First working version of the plugin.

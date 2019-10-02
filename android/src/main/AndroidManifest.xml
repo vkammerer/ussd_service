@@ -1,3 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.vincentkammerer.ussd_service">
+    <uses-sdk
+        android:minSdkVersion="26"
+        android:targetSdkVersion="28" />
 </manifest>

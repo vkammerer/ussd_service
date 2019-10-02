@@ -1,9 +1,10 @@
 name: ussd_service
-description: A new flutter plugin project.
+description: A Flutter plugin to make USSD requests.
 version: 0.0.1
-author:
-homepage:
-
+author: Vincent Kammerer<vkammerer@gmail.com>
+homepage: https://github.com/vkammerer/ussd_service.git
+repository: https://github.com/vkammerer/ussd_service.git
+issue_tracker: https://github.com/vkammerer/ussd_service/issues
 environment:
   sdk: ">=2.1.0 <3.0.0"
 

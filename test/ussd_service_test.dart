@@ -15,7 +15,7 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
-    expect(await UssdService.platformVersion, '42');
+  test('makeRequest', () async {
+    expect(await UssdService.makeRequest, isNot('42'));
   });
 }
