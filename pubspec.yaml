@@ -1,6 +1,6 @@
 name: ussd_service
 description: A Flutter plugin to make USSD requests.
-version: 0.0.1
+version: 0.0.2
 author: Vincent Kammerer<vkammerer@gmail.com>
 homepage: https://github.com/vkammerer/ussd_service.git
 repository: https://github.com/vkammerer/ussd_service.git
@@ -37,8 +37,8 @@ flutter:
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages
   #
+    # https://flutter.dev/assets-and-images/#resolution-aware.
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
 
   # To add custom fonts to your plugin package, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
