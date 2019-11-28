@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
-import 'package:ussd_service/ussd_service.dart';
-
+import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sim_service/models/sim_data.dart';
+import 'package:sim_service/sim_service.dart';
+import 'package:ussd_service/ussd_service.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,40 +14,40 @@ class MyApp extends StatefulWidget {
 }
 
 enum RequestState {
-  Undefined,
   Ongoing,
   Success,
   Error,
 }
 
 class _MyAppState extends State<MyApp> {
-  RequestState _requestState = RequestState.Undefined;
-  String _ussdResponseCode = '';
-  String _ussdResponseMessage = '';
-  String _ussdRequestCode = "";
+  RequestState _requestState;
+  String _requestCode = "";
+  String _responseCode = "";
+  String _responseMessage = "";
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> sendUssdRequest() async {
-    if (_requestState == RequestState.Ongoing) return;
     setState(() {
       _requestState = RequestState.Ongoing;
     });
-    String ussdResponse;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
+      String responseMessage;
       await PermissionHandler().requestPermissions([PermissionGroup.phone]);
-      ussdResponse = await UssdService.makeRequest(1, _ussdRequestCode);
-      if (!mounted) return;
+      SimData simData = await SimService.getSimData;
+      if (simData == null) {
+        debugPrint("simData cant be null");
+        return;
+      }
+      responseMessage = await UssdService.makeRequest(
+          simData.cards.first.subscriptionId, _requestCode);
       setState(() {
         _requestState = RequestState.Success;
-        _ussdResponseMessage = ussdResponse;
+        _responseMessage = responseMessage;
       });
-    } on PlatformException catch (e) {
-      if (!mounted) return;
+    } catch (e) {
       setState(() {
         _requestState = RequestState.Error;
-        _ussdResponseCode = e.code;
-        _ussdResponseMessage = e.message;
+        _responseCode = e.code;
+        _responseMessage = e.message;
       });
     }
   }
@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   onChanged: (newValue) {
                     setState(() {
-                      _ussdRequestCode = newValue;
+                      _requestCode = newValue;
                     });
                   },
                 ),
@@ -80,9 +80,11 @@ class _MyAppState extends State<MyApp> {
                 MaterialButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  onPressed: () {
-                    sendUssdRequest();
-                  },
+                  onPressed: _requestState == RequestState.Ongoing
+                      ? null
+                      : () {
+                          sendUssdRequest();
+                        },
                   child: Text('Send Ussd request'),
                 ),
                 SizedBox(
@@ -95,7 +97,7 @@ class _MyAppState extends State<MyApp> {
                   SizedBox(height: 10),
                   Text('Response was:'),
                   Text(
-                    _ussdResponseMessage,
+                    _responseMessage,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -104,13 +106,13 @@ class _MyAppState extends State<MyApp> {
                   SizedBox(height: 10),
                   Text('Error code was:'),
                   Text(
-                    _ussdResponseCode,
+                    _responseCode,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                   Text('Error message was:'),
                   Text(
-                    _ussdResponseMessage,
+                    _responseMessage,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ]

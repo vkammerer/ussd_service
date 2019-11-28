@@ -1,0 +1,9 @@
+include: package:pedantic/analysis_options.yaml
+linter:
+  rules:
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
+    - unnecessary_const
+    - directives_ordering
+    - avoid_relative_lib_imports
