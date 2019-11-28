@@ -4,29 +4,31 @@ This plugin makes it possible to access Android's [sendUssdRequest](https://deve
 
 ## Installation
 
-Add `ussd_service` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
+Add `ussd_service` as a dependency in your pubspec.yaml.
 
-Ensure your `AndroidManifext.xml` file includes the following permission:
+Make sure that your `AndroidManifext.xml` file includes the following permission:
 ```xml
 <uses-permission android:name="android.permission.CALL_PHONE" />
 ```
 
 ### Usage
 
-Ensure that the user has authorized access to his phone, for example with the [permission_handler plugin](https://pub.dev/packages/permission_handler).
+Before you use this plugin, you must:
+- make sure that the user has authorized access to his phone calls, for example with the [permission_handler plugin](https://pub.dev/packages/permission_handler).
+- retrieve the [SIM card subscription ID](https://developer.android.com/reference/android/telephony/SubscriptionInfo#getSubscriptionId()), for example with the [sim_service plugin](https://pub.dev/packages/sim_service).
 
 You may then use the plugin:
 ``` dart
 import 'package:ussd_service/ussd_service.dart';
 
 makeMyRequest() async {
-  int subscriptionId = 1; // sim card subscription Id
+  int subscriptionId = 1; // sim card subscription ID
   String code = "*21#"; // ussd code payload
   try {
-    String ussdSuccessMessage = await UssdService.makeRequest(subscriptionId, code);
-    print("succes! message: $ussdSuccessMessage");
-  } on PlatformException catch (e) {
-    print("error! code: ${e.code} - message: ${e.message}");
+    String ussdResponseMessage = await UssdService.makeRequest(subscriptionId, code);
+    print("succes! message: $ussdResponseMessage");
+  } catch(e) {
+    debugPrint("error! code: ${e.code} - message: ${e.message}");
   }
 };
 
