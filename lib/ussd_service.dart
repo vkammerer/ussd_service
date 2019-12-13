@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 
 class UssdService {
   static const MethodChannel _channel =
-      MethodChannel('vincentkammerer.com/ussd_service');
+  MethodChannel('vincentkammerer.com/ussd_service');
 
   /// Performs the USSD request and returns the response
   static Future<String> makeRequest(int subscriptionId, String code) async {

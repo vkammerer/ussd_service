@@ -1,5 +1,7 @@
 package com.vincentkammerer.ussd_service;
 
+import androidx.annotation.NonNull;
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -38,16 +40,16 @@ class UssdRequestParams {
 }
 
 /** UssdServicePlugin */
-public class UssdServicePlugin implements MethodCallHandler {
-  private final PluginRegistry.Registrar registrar;
+public class UssdServicePlugin implements FlutterPlugin, MethodCallHandler {
+  private Context iContext;
 
-  UssdServicePlugin(PluginRegistry.Registrar registrar) {
-    this.registrar = registrar;
+  public void setContext(Context applicationContextP) {
+    this.iContext = applicationContextP;
   }
 
   @SuppressLint("MissingPermission") // Check should be done on the flutter side
   private void makeRequest(final UssdRequestParams ussdRequestParams, final Result result) {
-    Context context = registrar.context();
+    Context context = this.iContext;
     TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     TelephonyManager simManager = manager.createForSubscriptionId(ussdRequestParams.subscriptionId);
     TelephonyManager.UssdResponseCallback callback = new TelephonyManager.UssdResponseCallback() {
@@ -71,7 +73,31 @@ public class UssdServicePlugin implements MethodCallHandler {
   }
 
   @Override
-  public void onMethodCall(MethodCall call, Result result) {
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "vincentkammerer.com/ussd_service");
+    UssdServicePlugin ussdServicePlugin = new UssdServicePlugin();
+    ussdServicePlugin.setContext(flutterPluginBinding.getApplicationContext());
+    channel.setMethodCallHandler(ussdServicePlugin);
+  }
+
+  // This static function is optional and equivalent to onAttachedToEngine. It supports the old
+  // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
+  // plugin registration via this function while apps migrate to use the new Android APIs
+  // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
+  //
+  // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
+  // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
+  // depending on the user's project. onAttachedToEngine or registerWith must both be defined
+  // in the same class.
+  public static void registerWith(Registrar registrar) {
+    final MethodChannel channel = new MethodChannel(registrar.messenger(), "vincentkammerer.com/ussd_service");
+    UssdServicePlugin ussdServicePlugin = new UssdServicePlugin();
+    ussdServicePlugin.setContext(registrar.context());
+    channel.setMethodCallHandler(ussdServicePlugin);
+  }
+
+  @Override
+  public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
     if (call.method.equals("makeRequest")) {
       final UssdRequestParams myUssdRequestParams = new UssdRequestParams(call);
       if (myUssdRequestParams.errorType != null) {
@@ -84,10 +110,7 @@ public class UssdServicePlugin implements MethodCallHandler {
     }
   }
 
-  /** Plugin registration. */
-  public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "vincentkammerer.com/ussd_service");
-    channel.setMethodCallHandler(new UssdServicePlugin(registrar));
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
   }
-
 }

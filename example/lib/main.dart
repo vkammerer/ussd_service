@@ -60,12 +60,12 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Ussd Plugin demo'),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Enter Code',
                   ),
                   onChanged: (newValue) {
@@ -74,9 +74,7 @@ class _MyAppState extends State<MyApp> {
                     });
                   },
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 MaterialButton(
                   color: Colors.blue,
                   textColor: Colors.white,
@@ -85,32 +83,30 @@ class _MyAppState extends State<MyApp> {
                       : () {
                           sendUssdRequest();
                         },
-                  child: Text('Send Ussd request'),
+                  child: const Text('Send Ussd request'),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 if (_requestState == RequestState.Ongoing)
-                  Text('Ongoing request...'),
+                  const Text('Ongoing request...'),
                 if (_requestState == RequestState.Success) ...[
-                  Text('Last request was successful.'),
-                  SizedBox(height: 10),
-                  Text('Response was:'),
+                  const Text('Last request was successful.'),
+                  const SizedBox(height: 10),
+                  const Text('Response was:'),
                   Text(
                     _responseMessage,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
                 if (_requestState == RequestState.Error) ...[
-                  Text('Last request was not successful'),
-                  SizedBox(height: 10),
-                  Text('Error code was:'),
+                  const Text('Last request was not successful'),
+                  const SizedBox(height: 10),
+                  const Text('Error code was:'),
                   Text(
                     _responseCode,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
-                  Text('Error message was:'),
+                  const SizedBox(height: 10),
+                  const Text('Error message was:'),
                   Text(
                     _responseMessage,
                     style: TextStyle(fontWeight: FontWeight.bold),

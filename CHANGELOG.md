@@ -17,3 +17,7 @@ Removes pubspec.lock
 ## 0.0.3+2 - 2019-11-29
 
 Adds CHANGELOG entry
+
+## 0.0.4 - 2019-12-14
+
+Upgrades to Android embedding V2 after release of Flutter 1.12 stable
