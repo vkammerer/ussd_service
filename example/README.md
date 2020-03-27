@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
   String _responseCode = "";
   String _responseMessage = "";
 
-  Future<void> sendUssdRequest() async {
+  Future<void> _sendUssdRequest() async {
     setState(() {
       _requestState = RequestState.Ongoing;
     });
@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> {
                   onPressed: _requestState == RequestState.Ongoing
                       ? null
                       : () {
-                          sendUssdRequest();
+                          _sendUssdRequest();
                         },
                   child: Text('Send Ussd request'),
                 ),

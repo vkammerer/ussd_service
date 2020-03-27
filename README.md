@@ -32,5 +32,13 @@ makeMyRequest() async {
   }
 };
 
-makeMyRequest();
+void main() => makeMyRequest();
+```
+
+### Interactive / multi steps USSD sessions
+
+Android's [sendUssdRequest](https://developer.android.com/reference/android/telephony/TelephonyManager.html#sendUssdRequest(java.lang.String,%20android.telephony.TelephonyManager.UssdResponseCallback,%20android.os.Handler)) doesn't support interactive / multi steps USSD sessions, so this plugin doesn't support them either.
+However, as mentioned by a user who reported it in a [comment](https://github.com/vkammerer/ussd_service/issues/1#issuecomment-590005604), you may be able to achieve similar behaviour by passing all arguments in a single USSD request.
+```
+*firstCode*2ndCode*3rdCode*4thCode*..*..#
 ```
