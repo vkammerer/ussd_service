@@ -21,3 +21,7 @@ Adds CHANGELOG entry
 ## 0.0.4 - 2019-12-14
 
 Upgrades to Android embedding V2 after release of Flutter 1.12 stable
+
+## 0.0.4+1 - 2020-03-28
+
+Adds guidance in README about interactive / multi steps USSD sessions
