@@ -59,11 +59,14 @@ class _MyAppState extends State<MyApp> {
     });
     try {
       String responseMessage;
-      await PermissionHandler().requestPermissions([PermissionGroup.phone]);
+      await Permission.phone.request();
+      if (!await Permission.phone.isGranted) {
+        throw Exception("permission missing");
+      }
+
       SimData simData = await SimService.getSimData;
       if (simData == null) {
-        debugPrint("simData cant be null");
-        return;
+        throw Exception("sim data is null");
       }
       responseMessage = await UssdService.makeRequest(
           simData.cards.first.subscriptionId, _requestCode);
@@ -74,7 +77,7 @@ class _MyAppState extends State<MyApp> {
     } catch (e) {
       setState(() {
         _requestState = RequestState.Error;
-        _responseCode = e.code;
+        _responseCode = e is PlatformException ? e.code : "";
         _responseMessage = e.message;
       });
     }
@@ -119,7 +122,17 @@ class _MyAppState extends State<MyApp> {
                   height: 20,
                 ),
                 if (_requestState == RequestState.Ongoing)
-                  Text('Ongoing request...'),
+                  Row(
+                    children: const <Widget>[
+                      SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(),
+                      ),
+                      SizedBox(width: 24),
+                      Text('Ongoing request...'),
+                    ],
+                  ),
                 if (_requestState == RequestState.Success) ...[
                   Text('Last request was successful.'),
                   SizedBox(height: 10),

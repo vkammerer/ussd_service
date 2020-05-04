@@ -25,3 +25,7 @@ Upgrades to Android embedding V2 after release of Flutter 1.12 stable
 ## 0.0.4+1 - 2020-03-28
 
 Adds guidance in README about interactive / multi steps USSD sessions
+
+## 0.1.0 - 2020-05-04
+
+Adds optional timeout parameter and permission checks on Android side

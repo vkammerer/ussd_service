@@ -23,9 +23,13 @@ import 'package:ussd_service/ussd_service.dart';
 
 makeMyRequest() async {
   int subscriptionId = 1; // sim card subscription ID
-  String code = "*21#"; // ussd code payload
+  String code = "*#21#"; // ussd code payload
   try {
-    String ussdResponseMessage = await UssdService.makeRequest(subscriptionId, code);
+    String ussdResponseMessage = await UssdService.makeRequest(
+        subscriptionId,
+        code,
+        Duration(seconds: 10), // timeout (optional) - default is 10 seconds
+    );
     print("succes! message: $ussdResponseMessage");
   } catch(e) {
     debugPrint("error! code: ${e.code} - message: ${e.message}");
