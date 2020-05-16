@@ -94,7 +94,9 @@ public class UssdServicePlugin implements FlutterPlugin, MethodCallHandler {
             "Incorrect parameter type: `subscriptionId` must be an int");
       }
       subscriptionId = subscriptionIdInteger;
-      if (subscriptionId <= 0) {
+
+      
+      if (subscriptionId < 0) {
         throw new RequestParamsException(
             "Incorrect parameter value: `subscriptionId` must be > 0");
       }
