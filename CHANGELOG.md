@@ -29,3 +29,7 @@ Adds guidance in README about interactive / multi steps USSD sessions
 ## 0.1.0 - 2020-05-04
 
 Adds optional timeout parameter and permission checks on Android side
+
+## 0.1.0+1 - 2020-05-23
+
+Fixes Exception thrown when accessing deprecated package
