@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
@@ -120,8 +120,9 @@ public class UssdServicePlugin implements FlutterPlugin, MethodCallHandler {
   }
 
 
-  private CompletableFuture<String> makeRequest(final UssdRequestParams ussdRequestParams) throws RequestExecutionException {
-    if (ActivityCompat.checkSelfPermission(this.context, permission.CALL_PHONE)
+  private CompletableFuture<String> makeRequest(final UssdRequestParams ussdRequestParams)
+      throws RequestExecutionException {
+    if (ContextCompat.checkSelfPermission(this.context, permission.CALL_PHONE)
         != PackageManager.PERMISSION_GRANTED) {
       throw new RequestExecutionException("CALL_PHONE permission missing");
     }
