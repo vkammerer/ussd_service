@@ -33,3 +33,7 @@ Adds optional timeout parameter and permission checks on Android side
 ## 0.1.0+1 - 2020-05-23
 
 Fixes Exception thrown when accessing deprecated package
+
+## 0.1.0+2 - 2020-06-05
+
+Adds support for subscription ID with a value of 0
