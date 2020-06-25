@@ -9,7 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   permission_handler: ^5.0.0+hotfix.5
-  sim_service: ^0.1.0
+  sim_data:
 
 dev_dependencies:
   flutter_test:

@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sim_service/models/sim_data.dart';
-import 'package:sim_service/sim_service.dart';
+import 'package:sim_data/sim_data.dart';
 import 'package:ussd_service/ussd_service.dart';
 
 void main() => runApp(MyApp());
@@ -37,7 +36,7 @@ class _MyAppState extends State<MyApp> {
         throw Exception("permission missing");
       }
 
-      SimData simData = await SimService.getSimData;
+      SimData simData = await SimDataPlugin.getSimData();
       if (simData == null) {
         throw Exception("sim data is null");
       }

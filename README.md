@@ -15,7 +15,7 @@ Make sure that your `AndroidManifext.xml` file includes the following permission
 
 Before you use this plugin, you must:
 - make sure that the user has authorized access to his phone calls, for example with the [permission_handler plugin](https://pub.dev/packages/permission_handler).
-- retrieve the [SIM card subscription ID](https://developer.android.com/reference/android/telephony/SubscriptionInfo#getSubscriptionId()), for example with the [sim_service plugin](https://pub.dev/packages/sim_service).
+- retrieve the [SIM card subscription ID](https://developer.android.com/reference/android/telephony/SubscriptionInfo#getSubscriptionId()), for example with the [sim_data plugin](https://pub.dev/packages/sim_data).
 
 You may then use the plugin:
 ``` dart

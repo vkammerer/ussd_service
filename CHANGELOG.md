@@ -37,3 +37,7 @@ Fixes Exception thrown when accessing deprecated package
 ## 0.1.0+2 - 2020-06-05
 
 Adds support for subscription ID with a value of 0
+
+## 0.1.0+3 - 2020-06-25
+
+Recommends using plugin sim_data instead of sim_service
