@@ -51,15 +51,16 @@ public class UssdServicePlugin implements FlutterPlugin, MethodCallHandler {
     if (call.method.equals(MAKE_REQUEST_METHOD)) {
       try {
         final UssdRequestParams mParams = new UssdRequestParams(call);
-        makeRequest(mParams).thenAccept(result::success).exceptionally((Throwable e) -> {
-          if (e instanceof RequestExecutionException) {
+        makeRequest(mParams).exceptionally((Throwable e) -> {
+          if (e instanceof
+              RequestExecutionException) {
             result.error(RequestExecutionException.type, ((RequestExecutionException) e).message,
                 null);
           } else {
             result.error(RequestExecutionException.type, e.getMessage(), null);
           }
           return null;
-        });
+        }).thenAccept(result::success);
       } catch (RequestParamsException e) {
         result.error(RequestParamsException.type, e.message, null);
       } catch (RequestExecutionException e) {
