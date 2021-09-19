@@ -7,24 +7,29 @@ Demonstrates how to use the Flutter plugin ussd_service.
 If you want to test the plugin in its own project:
 
 1. Clone the plugin repository:
+
 ```
 git clone https://github.com/vkammerer/ussd_service.git
 ```
-2. Open the "example" folder with your IDE or editor.   
-3. Install the project dependencies.   
-4. Run the application.   
+
+2. Open the "example" folder with your IDE or editor.
+3. Install the project dependencies.
+4. Run the application.
 
 ### Or test in your project
 
 If you prefer to test it directly in your project:
 
 1. Make sure that your `AndroidManifext.xml` file includes the following permission:
+
 ```xml
 <uses-permission android:name="android.permission.CALL_PHONE" />
 ```
-2. Add `ussd_service`, `permission_handler` and `sim_service` as a dependencies in your pubspec.yaml.   
 
-3. Then include and adapt the following code to your project.   
+2. Add `ussd_service`, `permission_handler` and `sim_service` as a dependencies in your pubspec.yaml.
+
+3. Then include and adapt the following code to your project.
+
 ```dart
 import 'dart:async';
 

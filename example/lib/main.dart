@@ -6,28 +6,30 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sim_data/sim_data.dart';
 import 'package:ussd_service/ussd_service.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 enum RequestState {
-  Ongoing,
-  Success,
-  Error,
+  ongoing,
+  success,
+  error,
 }
 
 class _MyAppState extends State<MyApp> {
-  RequestState _requestState;
+  RequestState? _requestState;
   String _requestCode = "";
   String _responseCode = "";
   String _responseMessage = "";
 
   Future<void> sendUssdRequest() async {
     setState(() {
-      _requestState = RequestState.Ongoing;
+      _requestState = RequestState.ongoing;
     });
     try {
       String responseMessage;
@@ -37,20 +39,17 @@ class _MyAppState extends State<MyApp> {
       }
 
       SimData simData = await SimDataPlugin.getSimData();
-      if (simData == null) {
-        throw Exception("sim data is null");
-      }
       responseMessage = await UssdService.makeRequest(
           simData.cards.first.subscriptionId, _requestCode);
       setState(() {
-        _requestState = RequestState.Success;
+        _requestState = RequestState.success;
         _responseMessage = responseMessage;
       });
-    } catch (e) {
+    } on PlatformException catch (e) {
       setState(() {
-        _requestState = RequestState.Error;
+        _requestState = RequestState.error;
         _responseCode = e is PlatformException ? e.code : "";
-        _responseMessage = e.message;
+        _responseMessage = e.message ?? '';
       });
     }
   }
@@ -81,7 +80,7 @@ class _MyAppState extends State<MyApp> {
                 MaterialButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  onPressed: _requestState == RequestState.Ongoing
+                  onPressed: _requestState == RequestState.ongoing
                       ? null
                       : () {
                           sendUssdRequest();
@@ -89,7 +88,7 @@ class _MyAppState extends State<MyApp> {
                   child: const Text('Send Ussd request'),
                 ),
                 const SizedBox(height: 20),
-                if (_requestState == RequestState.Ongoing)
+                if (_requestState == RequestState.ongoing)
                   Row(
                     children: const <Widget>[
                       SizedBox(
@@ -101,28 +100,28 @@ class _MyAppState extends State<MyApp> {
                       Text('Ongoing request...'),
                     ],
                   ),
-                if (_requestState == RequestState.Success) ...[
+                if (_requestState == RequestState.success) ...[
                   const Text('Last request was successful.'),
                   const SizedBox(height: 10),
                   const Text('Response was:'),
                   Text(
                     _responseMessage,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
-                if (_requestState == RequestState.Error) ...[
+                if (_requestState == RequestState.error) ...[
                   const Text('Last request was not successful'),
                   const SizedBox(height: 10),
                   const Text('Error code was:'),
                   Text(
                     _responseCode,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   const Text('Error message was:'),
                   Text(
                     _responseMessage,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ]
               ]),

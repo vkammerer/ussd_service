@@ -1,9 +1,4 @@
-include: package:pedantic/analysis_options.yaml
-linter:
-  rules:
-    - prefer_const_constructors
-    - prefer_const_declarations
-    - prefer_const_literals_to_create_immutables
-    - unnecessary_const
-    - directives_ordering
-    - avoid_relative_lib_imports
+include: package:flutter_lints/flutter.yaml
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options

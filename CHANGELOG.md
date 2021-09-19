@@ -1,3 +1,7 @@
+## 0.1.1
+
+Adds support for sound null safety
+
 ## 0.1.0+4
 
 Fixes bug where Android Exception wasn't propagated to Dart
